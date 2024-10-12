@@ -1,19 +1,15 @@
-@Library("mylibs") _
 pipeline {
   agent any
   tools {
-    maven 'maven2'
+    maven 'maven3'
   }
   stages{
-    stage("Maven Build"){
-      steps{
-        sh "mvn clean package"
-      }
+    stage('git checkout'){
+      git 'https://github.com/Lokeshmovietalks/my-app.git'
     }
-    stage("Deploy To Dev"){
-      steps{
-        tomcatDeploy("tomcat-dev","ec2-user",["172.31.13.89","172.31.13.89"])
-      }
+    stage('Maven Build'){
+      sh 'mvn clean package'
     }
   }
+  
 }
